@@ -4,6 +4,11 @@ spring:
     application:
       name: demo-consumer
     kafka:
+      backoff:
+        interval:
+          5000
+        max_failure:
+          2
       bootstrap-servers: localhost:9092
       consumer:
         group-id: demo-group
