@@ -33,11 +33,14 @@ public class PostService {
 	}
 	
 	public CreatedPostDTO createPost(CreatePostDTO postDto) {
-		if(postDto.postTitle().isBlank() || postDto.postContent().isBlank()) {
+		if(
+				postDto.postTitle().isBlank() ||
+				postDto.postContent().isBlank()
+		) {
 			throw new RuntimeException("Atributos não podem ser vazios ou nulos");
 		}
 		
-		boolean clientExists = projectionService.existsById(
+		boolean clientExists = projectionService.existsByClientId(
 				postDto.userId());
 		
 		if(!clientExists) {
