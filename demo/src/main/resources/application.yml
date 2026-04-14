@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: demo
+  kafka:
+    bootstrap-servers: localhost:9092
+  datasource:
+    url: jdbc:postgresql://localhost:5432/client_db
+    username: postgres
+    password: postgres
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+kafka-topic: topic-test

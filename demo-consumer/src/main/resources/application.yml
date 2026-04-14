@@ -1,0 +1,21 @@
+server:
+  port: 8000
+spring:
+    application:
+      name: demo-consumer
+    kafka:
+      bootstrap-servers: localhost:9092
+      consumer:
+        group-id: demo-group
+        properties:
+            spring.json.trusted.packages: "*"
+    datasource:
+        url: jdbc:postgresql://localhost:5432/posts_db
+        username: postgres
+        password: postgres
+    jpa:
+        hibernate:
+          ddl-auto: create-drop
+app:
+  kafka:
+    topic-test: topic-test
