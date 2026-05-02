@@ -1,7 +1,10 @@
 package com.example.demo.servicd;
 
 import java.util.List;
+import java.util.UUID;
 
+import com.example.demo.client.PostClient;
+import com.example.demo.controller.dtos.ClientPostsDTO;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.controller.dtos.CreateClientsDTO;
@@ -13,25 +16,30 @@ import com.example.demo.repository.DemoRepository;
 
 @Service
 public class DemoService {
-	
-	private ClientEventProducer producer;
-	private DemoRepository repository;
+
+	private final PostClient postClient;
+	private final ClientEventProducer producer;
+	private final DemoRepository repository;
 
 	public DemoService(
+			PostClient postClient,
 			ClientEventProducer producer,
 			DemoRepository repository) {
+		this.postClient = postClient;
 		this.repository = repository;
 		this.producer = producer;
 	}
 	
-	public List<CreatedClientDTO> getAllCllients() {
+	public List<ClientPostsDTO> getAllClients(UUID userId) {
+		var posts = postClient.findAllPostsByUserId(userId);
+
 		return repository.findAll()
-				.stream()
-				.map(user -> new CreatedClientDTO(
+				.stream().map(user -> new ClientPostsDTO(
 						user.getId(),
 						user.getClientName(),
-						user.getEmail()))
-				.toList();
+						user.getEmail(),
+						posts
+				)).toList();
 	}
 	
 	public CreatedClientDTO createClients(CreateClientsDTO dto) {

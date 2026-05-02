@@ -1,12 +1,10 @@
 package com.example.demo.controller;
 
 import java.util.List;
+import java.util.UUID;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.example.demo.controller.dtos.ClientPostsDTO;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.controller.dtos.CreateClientsDTO;
 import com.example.demo.controller.dtos.CreatedClientDTO;
@@ -22,9 +20,9 @@ public class DemoController {
 		this.service = service;
 	}
 	
-	@GetMapping
-	public List<CreatedClientDTO> findAllUsers() {
-		return service.getAllCllients();
+	@GetMapping(value = "/{userId}")
+	public List<ClientPostsDTO> findAllUsers(@PathVariable UUID userId) {
+		return service.getAllClients(userId);
 	}
 	
 	@PostMapping

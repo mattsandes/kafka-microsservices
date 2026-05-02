@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-consumer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: demo-consumer
+  template:
+    metadata:
+      labels:
+        app: demo-consumer
+    spec:
+      containers:
+        - name: demo-consumer
+          image: demo-consumer:local
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8001
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:postgresql://postgres:5432/post_db
+            - name: SPRING_DATASOURCE_USERNAME
+              value: postgres
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: postgres
+            - name: SPRNG_KAFKA_BOOTSTRAP_SERVERS
+              value: kafka:9092
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: demo-consumer
+spec:
+  selector:
+    app: demo-consumer
+  ports:
+    - port: 8001
+      targetPort: 8001

@@ -1,6 +1,7 @@
 package br.com.sandes.services;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
@@ -61,5 +62,19 @@ public class PostService {
 				createdPost.getContent(),
 				createdPost.getUserid()
 		);
+	}
+
+	public List<CreatedPostDTO> findPostsByUserId(UUID id) {
+		if(id == null) {
+			throw new IllegalArgumentException("O id não pode ser nulo");
+		}
+
+        return repository.findAllByUserid(id)
+                .stream().map(post -> new CreatedPostDTO(
+                        post.getId(),
+                        post.getPostTitle(),
+                        post.getContent(),
+                        post.getUserid()
+                )).toList();
 	}
 }

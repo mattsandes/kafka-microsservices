@@ -1,12 +1,9 @@
 package br.com.sandes.controller;
 
 import java.util.List;
+import java.util.UUID;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import br.com.sandes.controller.dtos.CreatePostDTO;
 import br.com.sandes.controller.dtos.CreatedPostDTO;
@@ -31,5 +28,10 @@ public class PostController {
 	public CreatedPostDTO createPost(
 			@RequestBody CreatePostDTO postDto) {
 		return service.createPost(postDto);
+	}
+
+	@GetMapping(value = "/{userId}")
+	public List<CreatedPostDTO> findAllPostsByUserId(@PathVariable UUID userId) {
+		return service.findPostsByUserId(userId);
 	}
 }
